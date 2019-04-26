@@ -2,9 +2,8 @@
 #define STFCLK 7
 #define SDI 8
 
-int numbers[] = {192, 249, 164, 176, 153, 146, 130,248, 128, 144};//вывод символов от 0 до 9 согластно масиву
-void setup()
-{
+int numbers[] = {192, 249, 164, 176, 153, 146, 130, 248, 128, 144};//вывод символов от 0 до 9 согластно масиву
+void setup(){
     pinMode(LCHCLK, OUTPUT);
     pinMode(STFCLK, OUTPUT);
     pinMode(SDI,OUTPUT);
@@ -38,10 +37,20 @@ void printLed(unsigned char num , unsigned char digit){
 	digitalWrite(LCHCLK,HIGH);
 }
 
+void timer(int time){
+    for (int i = 0; i <= time; ++i)
+    {
+        printLed(1,numbers[i]);
+        delay(1000);
+    }
+}
+
 void loop()
 {  
-	    for (int k = 9; k >= 0; --k){
-			printLed(1,numbers[k]);
-			delay(1000);
-		}
+    static int input = 0;
+    if (Serial.available() > 0){
+    input = Serial.parseInt();
+    }
+    timer(input);
+    input=NULL;
 }
