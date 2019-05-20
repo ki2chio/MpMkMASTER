@@ -1,12 +1,14 @@
 #define LCHCLK 4
 #define STFCLK 7
 #define SDI 8
+#define BUZZ 3
 
 int numbers[] = {192, 249, 164, 176, 153, 146, 130, 248, 128, 144};//вывод символов от 0 до 9 согластно масиву
 void setup(){
     pinMode(LCHCLK, OUTPUT);
     pinMode(STFCLK, OUTPUT);
     pinMode(SDI,OUTPUT);
+    pinMode(BUZZ, OUTPUT);
 
     digitalWrite(STFCLK,LOW);
 
@@ -40,9 +42,21 @@ void printLed(unsigned char num , unsigned char digit){
 void timer(int time){
     for (int i = 0; i <= time; ++i)
     {
+        if(i==time)
+        {
+            digitalWrite(BUZZ, HIGH);
+            delay(1);
+            digitalWrite(BUZZ, LOW);
+        }
         printLed(1,numbers[i]);
         delay(1000);
     }
+    if(i==time)
+        {
+            digitalWrite(BUZZ, HIGH);
+            delay(1);
+            digitalWrite(BUZZ, LOW);
+        }
 }
 
 void loop()
