@@ -38,33 +38,29 @@ rjmp Start ;Зацикливаем
 ret
 
 delayx:
-push R26 ;В стеке сохраняем значение R26
-m1:
-ldi R26, 0xFF
-m2:
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-dec R26
-brne m2
-dec R27
-brne m1
-pop R26 ;В стеке сохраняем значение R26
-ret
+	push R26 ;В стеке сохраняем значение R26
+	m1:
+	ldi R26, 0xFF
+	m2:
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	dec R26
+	brne m2
+	dec R27
+	brne m1
+	pop R26 ;В стеке сохраняем значение R26
+	ret
