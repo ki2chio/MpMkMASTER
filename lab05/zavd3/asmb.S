@@ -22,43 +22,53 @@ key_change:
 	cbi _DDRC, 2 ;Настраиваем на ввод информации 2 бит порта C
 	sbi _PORTC, 1 ;Подаем логическую "1" на 1 бит порта C
 	sbi _PORTC, 2 ;Подаем логическую "1" на 2 бит порта C
-	ldi R26 , 0b00111100 
+	ldi R26 , 0b00111111;
+	rjmp metka
+
 Down:
-	inc R26
-	;ldi R26 , 0b00111100
-	out _PORTB, R26;
-	ldi R23, 0xFF ;Устанавливаем величину задержки
-	rjmp m1
-Up:
-	;ldi R26 , 0b00000000
-	dec R26
-	;out _PORTB, R26;
+	lsl R26
+	out _PORTB, R26
 	ldi R23, 0xFF ;Устанавливаем величину задержки
 	rcall delayx ;Вызов нашей функции задержки
-	rjmp m1
-m1:
+	rjmp metka
+Up:
+	lsr R26 
+	out _PORTB, R26
+	ldi R23, 0xFF ;Устанавливаем величину задержки
+	rcall delayx ;Вызов нашей функции задержки
+	rjmp metka
+
+metka:
 	
 	nop
 	sbis _PINC, 1
 	rjmp Down
 	nop
+
+	nop
 	sbis _PINC, 2
 	rjmp Up
+	nop
 
-	;ldi R26 , 0b00011100 
-	out _PORTB, R26;
-	ldi R23, 0xFF
-	rcall delayx
-
-	rjmp m1 ;Зацикливаем
-	ret
-
+rjmp metka ;Зацикливаем
+ret
 
 delayx:
 	push R26 ;В стеке сохраняем значение R26
-n1:
+	m1:
 	ldi R26, 0xFF
-n2:
+	m2:
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
 	nop
 	nop
 	nop
@@ -76,8 +86,8 @@ n2:
 	nop
 	nop
 	dec R26
-	brne n2
+	brne m2
 	dec R27
-	brne n1
+	brne m1
 	pop R26 ;В стеке сохраняем значение R26
 	ret
